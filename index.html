@@ -2,59 +2,128 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sinais de Aviador</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sinais Aviator</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: system-ui, sans-serif;
         }
         body {
-            background: #111;
-            color: #fff;
+            background: #0b1120;
+            color: #f1f5f9;
+            min-height: 100vh;
+            padding: 20px;
             text-align: center;
-            padding: 40px 20px;
-        }
-        h1 {
-            font-size: 42px;
-            color: #ffc107;
-            margin-bottom: 16px;
-        }
-        p {
-            font-size: 20px;
-            color: #ccc;
-            margin-bottom: 40px;
         }
         .caixa {
-            background: #222;
-            border-radius: 16px;
-            padding: 30px;
-            max-width: 400px;
+            max-width: 440px;
             margin: 0 auto;
-            border: 2px solid #ffc107;
         }
-        .botao {
-            display: block;
+        h1 {
+            color: #facc15;
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+        .aviso {
+            font-size: 13px;
+            color: #94a3b8;
+            margin-bottom: 30px;
+        }
+        .card-sinal {
+            background: #141b2d;
+            border: 2px solid #facc15;
+            border-radius: 22px;
+            padding: 35px 20px;
+            margin-bottom: 25px;
+        }
+        .label {
+            font-size: 18px;
+            color: #cbd5e1;
+            margin-bottom: 12px;
+        }
+        .valor {
+            font-size: 56px;
+            font-weight: bold;
+            color: #22c55e;
+            margin-bottom: 25px;
+        }
+        button {
             width: 100%;
             padding: 16px;
-            background: #ffc107;
-            color: #111;
-            font-weight: bold;
+            border: none;
+            border-radius: 16px;
             font-size: 18px;
-            border-radius: 12px;
-            text-decoration: none;
-            margin-top: 20px;
+            font-weight: bold;
+            margin: 8px 0;
+            cursor: pointer;
+        }
+        .btn-gerar {
+            background: #22c55e;
+            color: #000;
+        }
+        .btn-limpar {
+            background: #ef4444;
+            color: #fff;
+        }
+        .card-hist {
+            background: #141b2d;
+            border-radius: 18px;
+            padding: 20px;
+            text-align: left;
+        }
+        .card-hist h3 {
+            color: #facc15;
+            margin-bottom: 12px;
+        }
+        .item {
+            padding: 7px 0;
+            border-bottom: 1px solid #273556;
+            color: #cbd5e1;
         }
     </style>
 </head>
 <body>
     <div class="caixa">
-        <h1>✈️ Sinais de Aviador</h1>
-        <p>Aplicativo de análise e estratégia</p>
-        <a class="botao" href="#">Receber Sinal</a>
+        <h1>✈️ Sinais Aviator</h1>
+        <p class="aviso">Estimativa estatística — não é garantia de resultado</p>
+
+        <div class="card-sinal">
+            <p class="label">Momento estimado de quebra:</p>
+            <div class="valor" id="sinal">--</div>
+            <button class="btn-gerar" onclick="novoSinal()">🔔 Novo Sinal</button>
+            <button class="btn-limpar" onclick="apagarTudo()">🗑️ Limpar</button>
+        </div>
+
+        <div class="card-hist">
+            <h3>📜 Histórico</h3>
+            <div id="historico"></div>
+        </div>
     </div>
+
+    <script>
+        const campoSinal = document.getElementById("sinal");
+        const campoHist = document.getElementById("historico");
+
+        function novoSinal() {
+            const min = 1.10;
+            const max = 12.00;
+            const num = (Math.random() * (max - min) + min).toFixed(2);
+            campoSinal.innerText = num + "x";
+
+            const hora = new Date().toLocaleTimeString("pt-BR");
+            const linha = document.createElement("div");
+            linha.className = "item";
+            linha.innerText = `${hora} | ${num}x`;
+            campoHist.prepend(linha);
+        }
+
+        function apagarTudo() {
+            campoSinal.innerText = "--";
+            campoHist.innerHTML = "";
+        }
+    </script>
 </body>
 </html>
-
